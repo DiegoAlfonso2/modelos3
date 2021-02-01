@@ -22,9 +22,9 @@ for frame in frames:
     paso = 25
     draw_rect.rectangle([x1, y1, x2, y2], outline=(0, 0, 0, 255), width=3)
     for x in range(paso, x2 - x1, paso):
-      draw_rect.line([(x, y1), (x, y2)], fill=(170, 170, 170, 255), width=1)
+      draw_rect.line([(x1 + x, y1), (x1 + x, y2)], fill=(170, 170, 170, 255), width=1)
     for y in range(paso, y2 - y1, paso):
-      draw_rect.line([(x1, y), (x2, y)], fill=(170, 170, 170, 255), width=1)
+      draw_rect.line([(x1, y1 + y), (x2, y1 + y)], fill=(170, 170, 170, 255), width=1)
     #draw_rect.rectangle([x1, y1, x2, y2], outline=(170, 170, 170, 255), width=3)
 
 
