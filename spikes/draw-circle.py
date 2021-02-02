@@ -2,7 +2,7 @@ import math
 from PIL import Image, ImageDraw
 
 # size of each grid cell 
-PASO = 25
+PASO = 10
 
 # size of image
 canvas = (400, 300)
