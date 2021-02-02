@@ -19,6 +19,9 @@ frames = [(250, 250, 5, 5)]
 circle = Image.new('RGBA', canvas, (255, 255, 255, 255))
 draw_circle = ImageDraw.Draw(circle)
 
+def fill_cell(draw, row, column, x1, y1):
+  draw.rectangle([(x1 + PASO * row, y1 + PASO * column), (x1 + PASO * (row + 1), y1 + PASO * (column + 1))], fill=(0, 255, 0, 255))
+
 # draw circle inside rectangles
 for frame in frames:
     x1, y1 = frame[2], frame[3]
@@ -32,6 +35,7 @@ for frame in frames:
       endline = (x2 - x1) - delta
       draw_circle.line([(x1 + d, y1 + startline), (x1 + d, y1 + endline)], fill=(170, 170, 170, 255), width=1)
       draw_circle.line([(x1 + startline, y1 + d), (x1 + endline, y1 + d)], fill=(170, 170, 170, 255), width=1)
+    fill_cell(draw_circle, 2,2,x1,y1)
 
 # make thumbnail
 #circle.thumbnail(thumb)
