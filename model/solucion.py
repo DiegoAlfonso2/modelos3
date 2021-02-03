@@ -1,3 +1,5 @@
+SEMANAS = 10
+
 class Solucion():
   def __init__(self):
     self.acciones = []
