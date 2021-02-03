@@ -6,6 +6,12 @@ class Accion():
     self.maceta = maceta
     self.posicion = posicion
     self.semana = semana
+  def __hash__(self):
+    return hash(planta, maceta, posicion, semana)
+  def __eq__(self, other):
+    return (self.planta, self.maceta, self.posicion, self.semana) == (other.planta, other.maceta, other.posicion, other.semana)
+  def __ne__(self, other):
+    return not(self == other)
   def se_superpone_con(self, otra):
     if self.maceta != otra.maceta:
       return False
