@@ -88,4 +88,49 @@ class TestSolucion():
     sol.agregar_accion(accion1)
     sol.agregar_accion(accion2)
     assert sol.es_solucion_factible()
-  #TODO testear que no se superponen si estan en dos macetas distintas
+
+  def test_solucion_dos_acciones_se_solapan_en_un_momento_no_factible(self):
+    sol = Solucion()
+    lechuga = Planta('Lechuga', (0, 255, 0, 255), [2, 4, 10])
+    jardinera = Maceta('Jardinera', 30, 60)
+    accion1 = Accion(lechuga, jardinera, (18, 10), 1)
+    accion2 = Accion(lechuga, jardinera, (14, 14), 2)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    assert not sol.es_solucion_factible()
+  
+  def test_solucion_dos_acciones_coexisten_sin_solaparse_factible(self):
+    sol = Solucion()
+    lechuga = Planta('Lechuga', (0, 255, 0, 255), [2, 2, 2, 2, 10])
+    jardinera = Maceta('Jardinera', 60, 60)
+    accion1 = Accion(lechuga, jardinera, (10, 10), 5)
+    accion2 = Accion(lechuga, jardinera, (24, 24), 7)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    assert sol.es_solucion_factible()
+
+  def test_solucion_dos_acciones_en_distintas_macetas_factible(self):
+    sol = Solucion()
+    lechuga = Planta('Lechuga', (0, 255, 0, 255), [2, 2, 2, 2, 10])
+    jardinera1 = Maceta('Jardinera 1', 60, 60)
+    jardinera2 = Maceta('Jardinera 2', 60, 60)
+    accion1 = Accion(lechuga, jardinera1, (10, 10), 2)
+    accion2 = Accion(lechuga, jardinera2, (10, 10), 3)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    assert sol.es_solucion_factible()
+  
+  def test_solucion_cuatro_acciones_dos_se_superponen_no_factible(self):
+    sol = Solucion()
+    zanahoria = Planta('Lechuga', (0, 255, 0, 255), [2, 2, 2, 2, 2])
+    jardinera = Maceta('Jardinera 1', 60, 60)
+    accion1 = Accion(zanahoria, jardinera, (10, 10), 2)
+    accion2 = Accion(zanahoria, jardinera, (20, 20), 3)
+    accion3 = Accion(zanahoria, jardinera, (30, 20), 2)
+    accion4 = Accion(zanahoria, jardinera, (22, 20), 2)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    sol.agregar_accion(accion3)
+    sol.agregar_accion(accion4)
+    assert not sol.es_solucion_factible()
+    

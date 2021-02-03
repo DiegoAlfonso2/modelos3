@@ -7,6 +7,8 @@ class Accion():
     self.posicion = posicion
     self.semana = semana
   def se_superpone_con(self, otra):
+    if self.maceta != otra.maceta:
+      return False
     for semana_desde_plantada, tamanio in enumerate(self.planta.crecimiento):
       # Es "absoluta", relativa al inicio del anio, cuenta desde la semana 1
       semana_bajo_analisis = self.semana + semana_desde_plantada
