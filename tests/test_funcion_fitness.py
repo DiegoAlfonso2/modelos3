@@ -38,4 +38,16 @@ class TestFuncionFitness():
     accion2 = Accion(zanahoria, jardinera, (10, 20), 1)
     sol.agregar_accion(accion1)
     sol.agregar_accion(accion2)
+    print(sol.es_solucion_factible())
     assert fitness.calcular_fitness_de_solucion(sol) == 47.25
+  
+  def test_fitness_solucion_no_factible(self):
+    fitness = FuncionFitness()
+    sol = Solucion()
+    lechuga = Planta('Lechuga', (0, 255, 0, 255), [2, 2, 4, 4, 6, 6], 1, 1)
+    jardinera = Maceta('Jardinera', 30, 60)
+    accion1 = Accion(lechuga, jardinera, (8, 8), 1)
+    accion2 = Accion(lechuga, jardinera, (8, 8), 1)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    assert fitness.calcular_fitness_de_solucion(sol) == 0

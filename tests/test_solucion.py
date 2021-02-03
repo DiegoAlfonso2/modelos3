@@ -39,6 +39,25 @@ class TestSolucion():
     sol.agregar_accion(accion2)
     assert sol.es_solucion_factible()
 
+  def test_solucion_dos_acciones_alineadas_horizontalmente_no_se_solapan_factible(self):
+    """
+      Semana 1
+       ______
+      |      |
+      |  x   |
+      |      |
+      |  x   |
+      |______|
+    """
+    sol = Solucion()
+    zanahoria = Planta('Zanahoria', (0, 255, 0, 255), [2, 2, 2, 2, 2, 2])
+    jardinera = Maceta('Jardinera', 30, 60)
+    accion1 = Accion(zanahoria, jardinera, (20, 10), 1)
+    accion2 = Accion(zanahoria, jardinera, (20, 40), 1)
+    sol.agregar_accion(accion1)
+    sol.agregar_accion(accion2)
+    assert sol.es_solucion_factible()
+
   def test_solucion_dos_acciones_coincidentes_espacio_al_mismo_tiempo_no_factible(self):
     sol = Solucion()
     lechuga = Planta('Lechuga', (0, 255, 0, 255), [2, 2, 4, 4, 6, 6])
