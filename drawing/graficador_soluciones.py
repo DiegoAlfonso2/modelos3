@@ -11,8 +11,8 @@ class GraficadorSoluciones():
 
   def graficar_solucion(self, solucion):
     for maceta in self.macetas:
-      acciones_en_maceta = filter(lambda a : a.maceta == maceta, solucion.acciones)
-      self.dibujar_maceta(maceta, acciones_en_maceta)
+      acciones_en_maceta = list(filter(lambda a : a.maceta == maceta, solucion.acciones))
+      self.graficar_maceta(maceta, acciones_en_maceta)
 
   def graficar_maceta(self, maceta, acciones_en_maceta):
     for semana in range(self.semanas):
