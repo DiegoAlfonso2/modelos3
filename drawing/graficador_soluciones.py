@@ -12,13 +12,13 @@ class GraficadorSoluciones():
   def graficar_solucion(self, solucion):
     for maceta in self.macetas:
       acciones_en_maceta = list(filter(lambda a : a.maceta == maceta, solucion.acciones))
-      self.graficar_maceta(maceta, acciones_en_maceta)
+      self.graficar_maceta(maceta, acciones_en_maceta, str(id(solucion)) + '_')
 
-  def graficar_maceta(self, maceta, acciones_en_maceta):
+  def graficar_maceta(self, maceta, acciones_en_maceta, prefijo_archivo=''):
     for semana in range(self.semanas):
-      self.graficar_maceta_en_semana(maceta, acciones_en_maceta, semana + 1)
+      self.graficar_maceta_en_semana(maceta, acciones_en_maceta, semana + 1, prefijo_archivo)
 
-  def graficar_maceta_en_semana(self, maceta, acciones_en_maceta, semana):
+  def graficar_maceta_en_semana(self, maceta, acciones_en_maceta, semana, prefijo_archivo):
     canvas = (maceta.ancho * self.escala + 2 * self.margen, maceta.largo * self.escala + 2 * self.margen)
     image = Image.new('RGBA', canvas, (255, 255, 255, 255))
     drawing = ImageDraw.Draw(image)
@@ -28,7 +28,7 @@ class GraficadorSoluciones():
     self.dibujar_grilla(drawing, x1_maceta, y1_maceta, x2_maceta, y2_maceta)
     for accion in acciones_en_maceta:
       self.dibujar_accion_en_semana(drawing, accion, semana)
-    image.save(self.path + maceta.identificador + '_sem' + str(semana) + '.png')
+    image.save(self.path + prefijo_archivo + maceta.identificador + '_sem' + str(semana) + '.png')
 
   def dibujar_contorno_maceta(self, drawing, x1, y1, x2, y2):
     drawing.rectangle([x1, y1, x2, y2], outline=(0, 0, 0, 255), width=3)
