@@ -15,9 +15,8 @@ class GraficadorSoluciones():
       self.dibujar_maceta(maceta, acciones_en_maceta)
 
   def graficar_maceta(self, maceta, acciones_en_maceta):
-    #TODO iterar en semanas
-    semana = 1
-    self.graficar_maceta_en_semana(maceta, acciones_en_maceta, semana)
+    for semana in range(self.semanas):
+      self.graficar_maceta_en_semana(maceta, acciones_en_maceta, semana + 1)
 
   def graficar_maceta_en_semana(self, maceta, acciones_en_maceta, semana):
     canvas = (maceta.ancho * self.escala + 2 * self.margen, maceta.largo * self.escala + 2 * self.margen)
@@ -44,16 +43,15 @@ class GraficadorSoluciones():
     if semana >= accion.semana and semana < accion.semana + len(accion.planta.crecimiento):
       tamanio = accion.planta.crecimiento[semana - accion.semana]
       borde_izq, borde_der, borde_sup, borde_inf = accion.planta.bordes_en_posicion(accion.posicion, tamanio)
-      x1, x2, y1, y2 = self.adaptar_escala((borde_izq, borde_der, borde_sup, borde_inf))
-      print(borde_izq, borde_der, borde_sup, borde_inf)
-      print(x1, x2, y1, y2)
+      x1, x2, y1, y2 = self.adaptar_escala((borde_izq, borde_der + 1, borde_sup, borde_inf + 1))
       for i in range(borde_izq, borde_der + 1):
         for j in range(borde_sup, borde_inf + 1):
           self.pintar_celda(drawing, i, j, color=accion.planta.color)
+      drawing.arc([x1, y1, x2, y2], 0, 360, fill=(0, 0, 0, 255), width=2)
 
   def adaptar_escala(self, bordes):
     return (borde * self.escala + self.margen for borde in bordes)
 
   def pintar_celda(self, drawing, row, column, color=(0,255,0,255)):
     x1, x2, y1, y2 = self.adaptar_escala((row, row + 1, column, column + 1))
-    drawing.rectangle([(x1, y1), (x2, y2)], fill=color, width=0)
+    drawing.rectangle([(x1, y1), (x2, y2)], outline=(170, 170, 170, 255), fill=color, width=1)
