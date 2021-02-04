@@ -11,3 +11,12 @@ class Solucion():
     return True
   def agregar_accion(self, accion):
     self.acciones.append(accion)
+  def determinar_interseccion_con(self, otra):
+    interseccion = {}
+    for accion in self.acciones:
+      for otra_accion in otra.acciones:
+        if accion.se_superpone_con(otra_accion):
+          if accion not in interseccion:
+            interseccion[accion] = []
+          interseccion[accion].append(otra_accion)
+    return interseccion
