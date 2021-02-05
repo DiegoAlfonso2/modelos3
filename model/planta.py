@@ -1,5 +1,7 @@
+import model.constantes as constantes
+
 class Planta():
-  def __init__(self, nombre, color, crecimiento, produccion_por_planta=1, precio=1, semanas_validas_plantacion=[1,2,3,4,5,6,7,8,9,10]):
+  def __init__(self, nombre, color, crecimiento, produccion_por_planta=1, precio=1, semanas_validas_plantacion=range(1,constantes.SEMANAS + 1)):
     self.nombre = nombre
     self.color = color
     self.crecimiento = crecimiento
