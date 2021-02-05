@@ -12,6 +12,10 @@ class Accion():
     return (self.planta, self.maceta, self.posicion, self.semana) == (other.planta, other.maceta, other.posicion, other.semana)
   def __ne__(self, other):
     return not(self == other)
+  def __str__(self):
+    return "<{}, {}, {}, {}>".format(self.planta, self.maceta, self.posicion, self.semana)
+  def __repr__(self):
+    return "<{}, {}, {}, {}>".format(self.planta, self.maceta, self.posicion, self.semana)
   def se_superpone_con(self, otra):
     if self.maceta != otra.maceta:
       return False
