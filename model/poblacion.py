@@ -44,7 +44,7 @@ class Poblacion():
         continue
       x_pos = self.randint(tamanio_maximo_planta - 1, maceta.ancho - tamanio_maximo_planta)
       y_pos = self.randint(tamanio_maximo_planta - 1, maceta.largo - tamanio_maximo_planta)
-      semana = self.randint(0, self.semanas) + 1
+      semana = self.choice(planta.semanas_validas)
       accion_nueva = Accion(planta, maceta, (x_pos, y_pos), semana)
       mutacion.agregar_accion(accion_nueva)
       if mutacion.es_solucion_factible():

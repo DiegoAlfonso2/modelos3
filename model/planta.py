@@ -1,10 +1,11 @@
 class Planta():
-  def __init__(self, nombre, color, crecimiento, produccion_por_planta=1, precio=1):
+  def __init__(self, nombre, color, crecimiento, produccion_por_planta=1, precio=1, semanas_validas_plantacion=[1,2,3,4,5,6,7,8,9,10]):
     self.nombre = nombre
     self.color = color
     self.crecimiento = crecimiento
     self.produccion_por_planta = produccion_por_planta
     self.precio = precio
+    self.semanas_validas = semanas_validas_plantacion
   def bordes_en_posicion(self, posicion, tamanio_semanal):
     """Devuelve la coordenada de los bordes en una supuesta maceta. Recibe la posicion
     en la que se planto y el tamanio que tiene en ese momento

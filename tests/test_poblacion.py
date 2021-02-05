@@ -55,8 +55,8 @@ class TestPoblacion():
     assert accion3 in sol3.acciones
 
   def test_mutar_solucion_agregar_accion(self):
-    choice = random_helper.inicializador_random([1, 0])
-    randint = random_helper.inicializador_random([8, 22, 1])
+    choice = random_helper.inicializador_random([1, 0, 1])
+    randint = random_helper.inicializador_random([8, 22])
     pob = Poblacion(choice_function=lambda x: x[choice()], randint_function=lambda i, r=0: randint())
     sol = Solucion()
     planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4])
@@ -72,7 +72,7 @@ class TestPoblacion():
   def test_mutar_solucion_agregar_accion_sin_forzar_azar(self):
     pob = Poblacion()
     sol = Solucion()
-    planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4])
+    planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4], semanas_validas_plantacion=[1,2,9,10])
     accion1 = Accion(self.planta1, self.maceta1, (45, 45), 1)
     sol.agregar_accion(accion1)
     resultado_mutacion = pob.mutar_solucion_agregar_accion(sol, [self.planta1, planta2], [self.maceta1])
