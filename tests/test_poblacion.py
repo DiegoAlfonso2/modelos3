@@ -3,6 +3,7 @@ from model.solucion import Solucion
 from model.maceta import Maceta
 from model.planta import Planta
 from model.accion import Accion
+from model.funcion_fitness import FuncionFitness
 from drawing.graficador_soluciones import GraficadorSoluciones
 import random_helper
 
@@ -77,3 +78,24 @@ class TestPoblacion():
     sol.agregar_accion(accion1)
     resultado_mutacion = pob.mutar_solucion_agregar_accion(sol, [self.planta1, planta2], [self.maceta1])
     GraficadorSoluciones([self.maceta1]).graficar_solucion(resultado_mutacion)
+  
+  def test_crear_poblacion_aleatoria(self):
+    pob = Poblacion()
+    planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4], semanas_validas_plantacion=[1,2,9,10])
+    cantidad_pobladores = 100
+    pob.crear_poblacion_aleatoria(cantidad_pobladores, [self.planta1, planta2], [self.maceta1])
+    # for sol in pob.soluciones:
+    #   GraficadorSoluciones([self.maceta1]).graficar_solucion(sol)
+  
+  def test_seleccion_y_cruce(self):
+    cantidad_pobladores = 100
+    pob = Poblacion(cantidad_pobladores)
+    planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4], semanas_validas_plantacion=[1,2,9,10])
+    pob.crear_poblacion_aleatoria([self.planta1, planta2], [self.maceta1])
+    fitness = FuncionFitness()
+    for i in range(100):
+      generacion2 = pob.seleccionar_y_cruzar(fitness)
+      pob.soluciones = generacion2
+    for solucion in generacion2:
+      GraficadorSoluciones([self.maceta1]).graficar_solucion(solucion)
+    

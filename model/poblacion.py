@@ -4,7 +4,8 @@ from model.solucion import Solucion
 from model.accion import Accion
 
 class Poblacion():
-  def __init__(self, semanas=constantes.SEMANAS, rand_function=random.uniform, choice_function=random.choice, randint_function=random.randint):
+  def __init__(self, cantidad_de_pobladores=100, semanas=constantes.SEMANAS, rand_function=random.uniform, choice_function=random.choice, randint_function=random.randint):
+    self.cantidad_pobladores = cantidad_de_pobladores
     self.soluciones = []
     self.semanas = semanas
     self.random = rand_function
@@ -51,4 +52,27 @@ class Poblacion():
         break
       mutacion.acciones = solucion.acciones[:]
     return mutacion
-    
+  
+  def mutar_solucion_eliminar_accion(self, solucion):
+    mutacion = Solucion()
+    mutacion.acciones = solucion.acciones[:]
+    mutacion.acciones.remove(self.choice(mutacion.acciones))
+    return mutacion
+  
+  def crear_poblacion_aleatoria(self, plantas, macetas):
+    for i in range(self.cantidad_pobladores):
+      nueva_solucion = Solucion()
+      for j in range(self.randint(1, 10)):
+        nueva_solucion = self.mutar_solucion_agregar_accion(nueva_solucion, plantas, macetas)
+      self.soluciones.append(nueva_solucion)
+  
+  def seleccionar_y_cruzar(self, funcion_fitness):
+    soluciones_puntuadas = list(map(lambda x: (x, funcion_fitness.calcular_fitness_de_solucion(x)), self.soluciones))
+    mejor_solucion, maximo_fitness = max(soluciones_puntuadas, key=lambda x: x[1])
+    pasan_a_siguiente_generacion = list(map(lambda l: l[0], filter(lambda x: self.random(0,1) <= float(x[1]) / maximo_fitness, soluciones_puntuadas)))
+    hijos = []
+    while len(pasan_a_siguiente_generacion) + len(hijos) < self.cantidad_pobladores:
+      padre1 = self.choice(pasan_a_siguiente_generacion)
+      padre2 = self.choice(pasan_a_siguiente_generacion)
+      hijos.append(self.cruzar_soluciones(padre1, padre2))
+    return pasan_a_siguiente_generacion + hijos
