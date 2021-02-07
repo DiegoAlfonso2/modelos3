@@ -11,6 +11,7 @@ class Poblacion():
     self.random = rand_function
     self.choice = choice_function
     self.randint = randint_function
+
   def cruzar_soluciones(self, sol1, sol2):
     # TODO refactor
     sol_cruce = Solucion()
@@ -62,9 +63,23 @@ class Poblacion():
   def crear_poblacion_aleatoria(self, plantas, macetas):
     for i in range(self.cantidad_pobladores):
       nueva_solucion = Solucion()
-      for j in range(self.randint(1, 10)):
+      for j in range(self.randint(1, 30)):
         nueva_solucion = self.mutar_solucion_agregar_accion(nueva_solucion, plantas, macetas)
       self.soluciones.append(nueva_solucion)
+
+  def crear_poblacion_sembrada(self, plantas, macetas):
+    for maceta in macetas:
+      for planta in plantas:
+        tamanio_maximo_planta = max(planta.crecimiento)
+        if tamanio_maximo_planta * 2 > maceta.ancho or tamanio_maximo_planta * 2 > maceta.largo:
+          continue
+        for semana in planta.semanas_validas:
+          nueva_solucion = Solucion()
+          for x in range(tamanio_maximo_planta - 1, maceta.largo - tamanio_maximo_planta + 1, tamanio_maximo_planta * 2):
+            for y in range(tamanio_maximo_planta - 1, maceta.largo - tamanio_maximo_planta + 1, tamanio_maximo_planta * 2):
+              accion = Accion(planta, maceta, (x, y), semana)
+              nueva_solucion.agregar_accion(accion)
+          self.soluciones.append(nueva_solucion)
   
   def seleccionar_y_cruzar(self, funcion_fitness):
     soluciones_puntuadas = list(map(lambda x: (x, funcion_fitness.calcular_fitness_de_solucion(x)), self.soluciones))
