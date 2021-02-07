@@ -1,6 +1,7 @@
 class Accion():
   def __init__(self, planta, maceta, posicion, semana):
     if not maceta.puede_plantarse_planta_en_posicion(planta, posicion):
+      print('Error en ', planta, posicion)
       raise ValueError()
     if not semana in planta.semanas_validas:
       raise ValueError()

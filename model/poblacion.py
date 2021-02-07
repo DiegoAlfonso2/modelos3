@@ -75,7 +75,7 @@ class Poblacion():
           continue
         for semana in planta.semanas_validas:
           nueva_solucion = Solucion()
-          for x in range(tamanio_maximo_planta - 1, maceta.largo - tamanio_maximo_planta + 1, tamanio_maximo_planta * 2):
+          for x in range(tamanio_maximo_planta - 1, maceta.ancho - tamanio_maximo_planta + 1, tamanio_maximo_planta * 2):
             for y in range(tamanio_maximo_planta - 1, maceta.largo - tamanio_maximo_planta + 1, tamanio_maximo_planta * 2):
               accion = Accion(planta, maceta, (x, y), semana)
               nueva_solucion.agregar_accion(accion)
@@ -83,11 +83,24 @@ class Poblacion():
   
   def seleccionar_y_cruzar(self, funcion_fitness):
     soluciones_puntuadas = list(map(lambda x: (x, funcion_fitness.calcular_fitness_de_solucion(x)), self.soluciones))
-    mejor_solucion, maximo_fitness = max(soluciones_puntuadas, key=lambda x: x[1])
-    pasan_a_siguiente_generacion = list(map(lambda l: l[0], filter(lambda x: self.random(0,1) <= float(x[1]) / maximo_fitness, soluciones_puntuadas)))
+    soluciones_puntuadas.sort(key=lambda x: x[1], reverse=True)
+    mejor_solucion, maximo_fitness = soluciones_puntuadas[0]
+    # El mejor 10% pasa a la siguiente generacion directamente
+    pasan_a_siguiente_generacion = list(map(lambda x: x[0], soluciones_puntuadas[0:int(len(soluciones_puntuadas)/10)]))
+    candidatos_a_reproducirse = list(map(lambda l: l[0], filter(lambda x: self.random(0,1) <= float(x[1]) / maximo_fitness, soluciones_puntuadas)))
     hijos = []
     while len(pasan_a_siguiente_generacion) + len(hijos) < self.cantidad_pobladores:
-      padre1 = self.choice(pasan_a_siguiente_generacion)
-      padre2 = self.choice(pasan_a_siguiente_generacion)
+      padre1 = self.choice(candidatos_a_reproducirse)
+      padre2 = self.choice(candidatos_a_reproducirse)
       hijos.append(self.cruzar_soluciones(padre1, padre2))
     return pasan_a_siguiente_generacion + hijos
+  
+  def mutar_poblacion(self, probabilidad_de_mutacion, plantas, macetas):
+    for solucion in self.soluciones:
+      if self.random(0,1) <= probabilidad_de_mutacion:
+        self.mutar_solucion_eliminar_accion(solucion)
+        self.mutar_solucion_agregar_accion(solucion, plantas, macetas)
+  
+  def obtener_mejor_poblador(self, funcion_fitness):
+    soluciones_puntuadas = list(map(lambda x: (x, funcion_fitness.calcular_fitness_de_solucion(x)), self.soluciones))
+    return max(soluciones_puntuadas, key=lambda x: x[1])

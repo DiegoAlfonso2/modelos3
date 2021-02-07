@@ -8,7 +8,7 @@ from drawing.graficador_soluciones import GraficadorSoluciones
 import random_helper
 
 class TestPoblacion():
-  maceta1 = Maceta('PoblacionMaceta1', 60, 60)
+  maceta1 = Maceta('PoblacionMaceta1', 30, 60)
   planta1 = Planta('Planta1', (255,0,0,128), [2, 2, 4, 4, 6, 6, 6])
   def test_cruzar_soluciones_sin_interseccion(self):
     pob = Poblacion()
@@ -101,11 +101,18 @@ class TestPoblacion():
     pob.crear_poblacion_aleatoria([self.planta1, planta2], [self.maceta1])
     pob.crear_poblacion_sembrada([self.planta1, planta2], [self.maceta1])
     fitness = FuncionFitness()
-    for i in range(5):
-      if i % 100 == 0:
+    for i in range(50):
+      if i % 10 == 0:
         print(i)
       generacion2 = pob.seleccionar_y_cruzar(fitness)
       pob.soluciones = generacion2
     for solucion in generacion2:
       GraficadorSoluciones([self.maceta1]).graficar_solucion(solucion)
-    
+  
+  def test_mutar_poblacion(self):
+    cantidad_pobladores = 100
+    pob = Poblacion(cantidad_pobladores)
+    planta2 = Planta('Planta2', (0, 128, 128, 128), [4, 4, 4, 4], semanas_validas_plantacion=[1,2,9,10])
+    pob.crear_poblacion_aleatoria([self.planta1, planta2], [self.maceta1])
+    pob.crear_poblacion_sembrada([self.planta1, planta2], [self.maceta1])
+    pob.mutar_poblacion(0.02, [self.planta1, planta2], [self.maceta1])
