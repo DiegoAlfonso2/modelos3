@@ -94,12 +94,17 @@ class Poblacion():
       padre2 = self.choice(candidatos_a_reproducirse)
       hijos.append(self.cruzar_soluciones(padre1, padre2))
     return pasan_a_siguiente_generacion + hijos
+
+  def seleccionar_cruzar_y_reemplazar(self, funcion_fitness):
+    self.soluciones = self.seleccionar_y_cruzar(funcion_fitness)
   
   def mutar_poblacion(self, probabilidad_de_mutacion, plantas, macetas):
     for solucion in self.soluciones:
       if self.random(0,1) <= probabilidad_de_mutacion:
         self.mutar_solucion_eliminar_accion(solucion)
         self.mutar_solucion_agregar_accion(solucion, plantas, macetas)
+        if not solucion.acciones:
+          self.soluciones.remove(solucion)
   
   def obtener_mejor_poblador(self, funcion_fitness):
     soluciones_puntuadas = list(map(lambda x: (x, funcion_fitness.calcular_fitness_de_solucion(x)), self.soluciones))

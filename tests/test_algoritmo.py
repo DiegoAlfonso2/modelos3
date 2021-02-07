@@ -14,7 +14,7 @@ class TestAlgoritmo():
     # Si la cantidad de zanahoria no es al menos la mitad en kg de la cosecha total, bajo el funcional un 40%
     penalizacion = self.penalizacion_porcentaje_minimo_planta(zanahoria, 0.5, 0.6)
     fitness.agregar_penalizacion(penalizacion)
-    algoritmo = Algoritmo(5, fitness)
+    algoritmo = Algoritmo(20, fitness)
     solucion, valor = algoritmo.obtener_solucion_optima([lechuga, zanahoria], [jardinera])
     print('El fitness de la mejor solucion obtenida es', valor)
     graficador = GraficadorSoluciones([jardinera])
@@ -23,7 +23,9 @@ class TestAlgoritmo():
   #TODO metodo repetido
   def penalizacion_porcentaje_minimo_planta(self, planta, porcentaje, porc_penalizacion):
     def penalizacion(fitness, solucion):
-      peso_total_cosecha = reduce(lambda x,y: x+y, map(lambda accion: accion.planta.produccion_por_planta, solucion.acciones))
+      peso_total_cosecha = reduce(lambda x,y: x+y, map(lambda accion: accion.planta.produccion_por_planta, solucion.acciones),0)
+      if not peso_total_cosecha:
+        return 0
       peso_planta = reduce(lambda x,y: x+y, map(lambda accion: accion.planta.produccion_por_planta, filter(lambda accion: accion.planta == planta, solucion.acciones)),0)
       return fitness if float(peso_planta) / peso_total_cosecha >= porcentaje else fitness * porc_penalizacion
     return penalizacion
