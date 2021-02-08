@@ -1,7 +1,8 @@
 from PIL import Image, ImageDraw
+import model.constantes as constantes
 
 class GraficadorSoluciones():
-  def __init__(self, macetas, paso=10, semanas=10, path='tests/testout/'):
+  def __init__(self, macetas, paso=10, semanas=constantes.SEMANAS, path='tests/testout/'):
     self.macetas = macetas
     self.paso = paso
     self.semanas = semanas
