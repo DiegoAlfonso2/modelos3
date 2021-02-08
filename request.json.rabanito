@@ -21,9 +21,9 @@
     {
       "planta": "Albahaca",
       "porcentaje_minimo": 0.2,
-      "penalizacion_porcentaje_minimo": 0.01,
+      "penalizacion_porcentaje_minimo": 0.6,
       "porcentaje_maximo:": 0.3,
-      "penalizacion_porcentaje_maximo": 0.0025
+      "penalizacion_porcentaje_maximo": 0.4
     }
   ]
 }

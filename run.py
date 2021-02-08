@@ -35,7 +35,7 @@ if __name__ == "__main__":
   semana_anterior = 0
   for accion in acciones:
     if accion.semana > semana_anterior:
-      print('Semana ', accion.semana)
+      print('Periodo ', accion.semana)
       semana_anterior = accion.semana
     print('Plantar {} en {}, a {} cms hacia la derecha y {} cms hacia abajo del borde superior izquierdo'.format(accion.planta.nombre, accion.maceta.identificador, accion.posicion[0], accion.posicion[1]))
   graficador = GraficadorSoluciones(macetas, path='salida/')
