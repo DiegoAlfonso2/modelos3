@@ -31,5 +31,12 @@ if __name__ == "__main__":
   algoritmo = Algoritmo(constantes.CANT_ITERACIONES, funcion_fitness)
   solucion, valor = algoritmo.obtener_solucion_optima(plantas, macetas)
   print('El fitness de la mejor solucion obtenida es', valor)
+  acciones = sorted(solucion.acciones, key=lambda accion: accion.semana)
+  semana_anterior = 0
+  for accion in acciones:
+    if accion.semana > semana_anterior:
+      print('Semana ', accion.semana)
+      semana_anterior = accion.semana
+    print('Plantar {} en {}, a {} cms hacia la derecha y {} cms hacia abajo del borde superior izquierdo'.format(accion.planta.nombre, accion.maceta.identificador, accion.posicion[0], accion.posicion[1]))
   graficador = GraficadorSoluciones(macetas, path='salida/')
   graficador.graficar_solucion(solucion)
