@@ -14,6 +14,7 @@ class Algoritmo():
     pob.crear_poblacion_sembrada(plantas, macetas)
     self.mejor_solucion, self.fitness_mejor_solucion = pob.obtener_mejor_poblador(self.funcion_fitness)
     for i in range(self.cantidad_iteraciones):
+      print('Corriendo iteracion', i + 1)
       pob.seleccionar_cruzar_y_reemplazar(self.funcion_fitness)
       pob.mutar_poblacion(self.probabilidad_de_mutacion, plantas, macetas)
       mejor_solucion, fitness_mejor_solucion = pob.obtener_mejor_poblador(self.funcion_fitness)

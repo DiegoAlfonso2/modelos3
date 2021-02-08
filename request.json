@@ -1,0 +1,29 @@
+{
+  "macetas": [
+    {
+      "identificador": "Cajon",
+      "ancho": 30,
+      "largo": 60
+    },
+    {
+      "identificador": "Jardinera",
+      "ancho": 15,
+      "largo": 25      
+    }
+  ],
+  "cultivos": [
+    {
+      "planta": "Lechuga"
+    },
+    {
+      "planta": "Rabanito"
+    },
+    {
+      "planta": "Albahaca",
+      "porcentaje_minimo": 0.2,
+      "penalizacion_porcentaje_minimo": 0.6,
+      "porcentaje_maximo:": 0.3,
+      "penalizacion_porcentaje_maximo": 0.4
+    }
+  ]
+}
