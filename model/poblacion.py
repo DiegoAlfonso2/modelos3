@@ -57,7 +57,8 @@ class Poblacion():
   def mutar_solucion_eliminar_accion(self, solucion):
     mutacion = Solucion()
     mutacion.acciones = solucion.acciones[:]
-    mutacion.acciones.remove(self.choice(mutacion.acciones))
+    if mutacion.acciones:
+      mutacion.acciones.remove(self.choice(mutacion.acciones))
     return mutacion
   
   def crear_poblacion_aleatoria(self, plantas, macetas):
